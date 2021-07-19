@@ -66,30 +66,6 @@
     </div>
   </div>
   <script src="./script/vue.global3.1.5.js"></script>
-<!--   <script src="./script/main.js"></script> -->
-  <script>
-    const app = Vue.createApp({
-      data() {
-        return {
-          lightBox: false,
-          theme:'default',
-          persons: [],
-          selectCoord: {}
-        }
-      },
-      methods: {
-        getDatas() {
-          axios
-            .get('https://randomuser.me/api/?results=6')
-            .then((res) => this.persons = res.data.results)
-        },
-      },
-      mounted() {
-        this.getDatas();
-      }
-    })
-     app.mount('#app');
-
-  </script>
+  <script src="./script/main.js"></script>
 </body>
 </html>
