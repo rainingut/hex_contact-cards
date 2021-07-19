@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+  <link rel="stylesheet" href="./style/main.css">
+  <script src="./script/axios0.21.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div id="wrap"  class="container" :class="theme" @keyup.esc="lightBox=false">
+      <div class="ctrlbar mt-4 mb-4 row jc-sb">
+        <button class="random btn row jc-c ai-c" @click="getDatas()"><i class="fas fa-random"></i></button>
+        <div class="theme">
+          <input type="radio" v-model="theme" value="default" />
+          <input type="radio" v-model="theme" value="pink" />
+          <input type="radio" v-model="theme" value="orange" />
+          <input type="radio" v-model="theme" value="blue" />
+        </div>
+      </div>
+      
+      <div class="cards">
+        
+        <div class="card row jc-c" v-for="item in persons">
+          <div class="avatar p-2 col jc-c ai-c">
+            <div class="img"><img :src="item.picture.medium" alt="avatar"></div>
+            <p class="name mt-3 t-c t-primary">{{item.name.title}} {{item.name.first}} {{item.name.last}}</p>
+            </div>
+          <div class="info   p-2 col jc-c ">
+            <p class="mb-2 tel row ai-c">
+              <i class="fas fa-phone"></i>
+              <a :href="`tel:${item.phone}`" target="_blank">{{item.phone}}</a>
+            </p>
+            <p class="mb-2 phone row ai-c">
+              <i class="fas fa-mobile-alt"></i>
+              <a href="`tel:${item.cell}`" target="_blank">{{item.cell}}</a>
+            </p>
+            <p class="mb-2 email row ai-c">
+              <i class="fas fa-envelope"></i>
+              <a :href="`mailto:${item.email}`" target="_blank">{{item.email}}</a>
+            </p>
+            <hr class="mb-2">
+            <p class="mb-2 address row ai-c" @click="lightBox=true; selectCoord=(item.location.coordinates)">
+              <i class="fas fa-map-marker-alt"></i>
+              <button type="button" class="btn">{{item.location.city + '_' + item.location.country}}</button>
+            </p>
+          </div>
+        </div>
+  
+      </div>
+      <div class="map" v-if="lightBox">
+        <div class="lightbox" @click="lightBox=false"></div>
+        <div class="wrap p-2">
+          <iframe
+                frameborder="0"
+                scrolling="no"
+                marginheight="0"
+                marginwidth="0"
+                :src="`https://maps.google.com.tw/maps?f=q&amp;hl=zh-TW&amp;geocode=&amp;q=${selectCoord.latitude},${selectCoord.longitude}&amp;z=10&amp;output=embed`"></iframe>
+        <button class="closebtn btn" @click="lightBox=false"><i class="fas fa-times"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./script/vue.global3.1.5.js"></script>
+  <script src="./script/main.js"></script>
+</body>
+</html>

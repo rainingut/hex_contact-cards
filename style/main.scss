@@ -1,0 +1,226 @@
+  // setting and layout
+  *{
+    margin: 0;padding: 0;box-sizing: border-box;
+  }
+  :root {
+    --primary: yellowgreen;
+    --secondary: white;
+  }
+  $light: #fefefe;
+  $dark: #555;
+  $gray: gray;
+  $lightgray: #eee;
+  $distance: 8px;
+  $shadow: rgba(0,0,0,.36);
+  $pcBreakPoint: 1400px;
+  $btnW: 40px;
+  $btnF: 20px;
+  @for $i from 0 through 10 {
+    .p-#{$i} { padding: $distance * $i; }
+    .pt-#{$i} { padding-top: $distance * $i; }
+    .pr-#{$i} { padding-right: $distance * $i; }
+    .pb-#{$i} { padding-bottom: $distance * $i; }
+    .pl-#{$i} { padding-left: $distance * $i; }
+    .m-#{$i} { margin: $distance * $i; }
+    .mt-#{$i} { margin-top: $distance * $i; }
+    .mr-#{$i} { margin-right: $distance * $i; }
+    .mb-#{$i} { margin-bottom: $distance * $i; }
+    .ml-#{$i} { margin-left: $distance * $i; }
+  }
+  @mixin pad   {@media (max-width: 768px){@content;}}
+  @mixin phone {@media (max-width: 564px){@content;}}
+  @mixin circleBtn($bg: var(--primary)) {
+    background: $bg;
+    border-radius: 50%;
+    width: $btnW; height: $btnW;
+    position: relative;
+    display: inline-flex;
+    justify-content: center; align-items: center;
+    font-size: $btnF;
+    text-shadow: 0.5px 0.5px 0 $light;
+    color: $dark;
+    box-shadow: 0 0 5px 2px $shadow;
+  }
+  #wrap.default { --primary: yellowgreen; --secondary: white; }
+  #wrap.pink    { --primary: pink; --secondary: white; }
+  #wrap.orange  {--primary: orange; --secondary: #333; }
+  #wrap.blue    {--primary: dodgerblue; --secondary: #333; }
+  .row {display: flex; flex-wrap:wrap;}
+  .col {
+    display: flex;
+    flex-wrap:wrap;
+    flex-direction: column;
+  }
+  .jc-c { justify-content: center; }
+  .jc-s { justify-content: flex-start; }
+  .jc-e { justify-content: flex-end; }
+  .jc-sa { justify-content: space-around; }
+  .jc-sb { justify-content: space-between; }
+  .jc-se { justify-content: space-evenly; }
+  .ai-c { align-items: center; }
+  .ai-s { align-items: flex-start; }
+  .ai-e { align-items: flex-end; }
+  .t-c { text-align: center; }
+  .t-primary { color: var(--primary); }
+  a {
+    // text-decoration: none;
+    color: $dark;
+  }
+  .btn {
+    display: inline-block;
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+  }
+  
+  // component
+  .container {
+    max-width: $pcBreakPoint;
+    padding: 20px;
+    margin: auto;
+  }
+  
+  .ctrlbar input[type=radio] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    @include circleBtn();
+    cursor: pointer;
+    margin-right: $distance; 
+    &:last-of-type { margin-right: initial; }
+    &[value=default] {background: linear-gradient(to right, white 50%, yellowgreen 50%);}
+    &[value=pink] {background: linear-gradient(to right, white 50%, pink 50%);}
+    &[value=orange] {background: linear-gradient(to right, #333 50%, orange 50%);}
+    &[value=blue] {background: linear-gradient(to right, #333 50%, dodgerblue 50%);}
+    &:checked{ 
+      &::after {
+        font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f00c";
+        position: absolute;
+        top: 50%; left: 50%; 
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+  .ctrlbar .random {
+    @include phone { margin-bottom: 16px;}
+    @include circleBtn();
+  }
+  
+  .cards {
+    display: grid;
+    // grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 1.2rem;
+    @include phone {
+      grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    }
+  }
+  
+  .card {
+    background: $light;
+    border-radius: $distance;
+    overflow: hidden;
+    box-shadow: 2px 2px 22px rgba(0,0,0,.36);
+    .avatar { 
+      width: 30%;
+      background: var(--secondary);
+      .img {
+        position: relative;
+        width:       60%; 
+        padding-top: 60%;
+        font-size: 0;
+        border-radius: 50%; 
+        overflow: hidden; 
+        box-shadow: 
+          0 0 0 4px var(--secondary),
+          0 0 0 8px var(--primary);
+        img {  
+          position: absolute;
+          top: 50%; left: 50%;
+          transform:translate(-50%,-50%);
+          width: 100%; 
+          height: 100%; 
+          object-fit: cover; 
+        }
+      }
+      p {
+        font-weight: 900;
+        word-break: break-word;
+      }
+    }
+    .info {
+      width: 70%;
+      background: var(--primary);
+      p {
+        width: fit-content;
+        flex-wrap: nowrap;
+        word-break: break-all;
+      }
+      i {
+        color: var(--primary);
+        border-radius: 5px;
+        flex-shrink:0;
+        width: 25px; height: 25px;
+        background: var(--secondary);
+        text-align: center;
+        line-height: 25px;
+        margin-right: 16px;
+      }
+      a, button {
+        color: var(--secondary);
+      }
+      hr {
+        border-bottom: 1px solid var(--secondary);
+        opacity: .7;
+      }
+    }
+  }
+  
+  .map {
+    position: fixed;
+    top: 0;left: 0;
+    width: 100%;
+    height: 100%;
+    .lightbox{
+      width: 100%;
+      height: 100%;
+      background: $shadow;
+    }
+    .wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60vw;
+      height: 60vw;
+      max-width: $pcBreakPoint;
+      max-height: 90vh;
+      background: $lightgray;
+      @include pad {
+        width: 75vw;
+        height: 75vw;
+      }
+      @include phone {
+        width: 90vw;
+        height: 90vw;
+      }
+      iframe {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .closebtn {
+        position: absolute;
+        right: 15px ; top: 15px;
+        width: 25px; height: 25px;
+        font-size: 20px;
+        line-height: 20px;
+        text-align: center;
+        color: $gray;
+        border-radius: 50%;
+        // box-shadow: 0 0 15px  $shadow;
+        text-shadow: 0 0 3px  $shadow;
+      }
+    }
+  }
